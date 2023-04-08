@@ -8,8 +8,12 @@ export default function App() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseGoals, setCourseGoals] = useState([]);
 
-  function statrAddGoalHandler() {
+  function startAddGoalHandler() {
     setModalIsVisible(true);
+  }
+
+  function endAddGoalHandler() {
+    setModalIsVisible(false);
   }
 
   function addGoalHandler(enteredText) {
@@ -17,6 +21,7 @@ export default function App() {
       ...currentCourseGoals,
       { text: enteredText, id: Math.random().toString() },
     ]);
+    setModalIsVisible(false);
   }
 
   function deleteGoalHandler(id) {
@@ -31,9 +36,13 @@ export default function App() {
       <Button
         title="Add New Goal"
         color="#5e0acc"
-        onPress={statrAddGoalHandler}
+        onPress={startAddGoalHandler}
       />
-      <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} />
+      <GoalInput
+        visible={modalIsVisible}
+        onAddGoal={addGoalHandler}
+        onCancel={endAddGoalHandler}
+      />
       <View style={styles.goalsContainer}>
         <FlatList
           data={courseGoals}
